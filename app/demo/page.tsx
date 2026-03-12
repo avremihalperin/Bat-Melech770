@@ -29,9 +29,9 @@ export default async function DemoNavPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 via-background to-accent/10">
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <div className="mb-8 rounded-2xl bg-primary/10 p-4 text-center shadow-sm ring-1 ring-primary/20">
-          <h1 className="text-primary text-2xl font-bold">מסך ניווט הדגמה</h1>
+      <div className="mx-auto max-w-6xl px-3 py-6 sm:px-4 sm:py-8">
+        <div className="mb-6 rounded-2xl bg-primary/10 p-3 text-center shadow-sm ring-1 ring-primary/20 sm:mb-8 sm:p-4">
+          <h1 className="text-primary text-xl font-bold sm:text-2xl">מסך ניווט הדגמה</h1>
           <p className="text-muted-foreground mt-1 text-sm">
             גישה לכל המסכים האמיתיים עם חשבון אחד — בחרי דשבורד לפי תפקיד או גשי ישירות למסך
           </p>
@@ -54,7 +54,7 @@ export default async function DemoNavPage() {
           <div className="mb-4 flex flex-wrap justify-center gap-3">
             <a
               href="/dashboard?view=admin&org=chabad"
-              className="rounded-xl px-5 py-3 font-medium text-white shadow-md transition hover:opacity-90"
+              className="min-h-[44px] min-w-[44px] touch-manipulation rounded-xl px-5 py-3 font-medium text-white shadow-md transition hover:opacity-90"
               style={{
                 background: "linear-gradient(135deg, #E5398B 0%, #8DC63F 50%, #4FC3F7 100%)",
               }}
@@ -67,7 +67,7 @@ export default async function DemoNavPage() {
               <a
                 key={view}
                 href={`/dashboard?view=${encodeURIComponent(view)}`}
-                className="rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground shadow-md transition hover:opacity-90"
+                className="min-h-[44px] min-w-[44px] touch-manipulation rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground shadow-md transition hover:opacity-90"
               >
                 {label}
               </a>
@@ -84,79 +84,79 @@ export default async function DemoNavPage() {
           <div className="flex flex-wrap justify-center gap-3">
             <Link
               href="/dashboard/finance"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               ניהול כספים
             </Link>
             <Link
               href="/dashboard/users-branches"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               ניהול משתמשים וסניפים
             </Link>
             <Link
               href="/dashboard/users-branches/add"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               הוספת סניף
             </Link>
             <Link
               href="/dashboard/inventory"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               מלאי וציוד
             </Link>
             <Link
               href="/dashboard/messages"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               הודעות
             </Link>
             <Link
               href="/dashboard/supervision"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               מעקב ופיקוח
             </Link>
             <Link
               href="/dashboard/materials"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               ניהול חומרים
             </Link>
             <Link
               href="/dashboard/archive"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               ארכיון תוכן
             </Link>
             <Link
               href="/dashboard/safety-reports"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               בטיחות סניפים
             </Link>
             <Link
               href="/dashboard/safety-inbox"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               פניות בטיחות
             </Link>
             <Link
               href="/dashboard/medical"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               תיק רפואי
             </Link>
             <Link
               href="/approvals"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               אישורי הרשמה
             </Link>
             <Link
               href="/dashboard/admin-data"
-              className="rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
+              className="min-h-[44px] touch-manipulation rounded-xl border-2 border-primary/40 bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-primary/10"
             >
               בקרת נתונים
             </Link>
@@ -173,19 +173,19 @@ export default async function DemoNavPage() {
             {orderedBranches.map((b) => (
               <div
                 key={b.id}
-                className="flex flex-wrap items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card px-4 py-3 sm:justify-between"
+                className="flex flex-wrap items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card px-3 py-3 sm:justify-between sm:px-4"
               >
                 <span className="font-medium text-foreground">{b.name}</span>
                 <div className="flex flex-wrap gap-2">
                   <Link
                     href={`/dashboard?view=branch_center&branch_id=${b.id}`}
-                    className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
+                    className="min-h-[40px] min-w-[44px] touch-manipulation rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
                   >
                     דשבורד סניף
                   </Link>
                   <Link
                     href={`/dashboard/users-branches/branch/${b.id}`}
-                    className="rounded-lg border border-primary/40 bg-background px-3 py-1.5 text-xs font-medium text-foreground transition hover:bg-primary/10"
+                    className="min-h-[40px] min-w-[44px] touch-manipulation rounded-lg border border-primary/40 bg-background px-3 py-2 text-xs font-medium text-foreground transition hover:bg-primary/10"
                   >
                     פרופיל וצוות
                   </Link>

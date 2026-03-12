@@ -44,7 +44,7 @@ export function Header({
             <line x1="4" x2="20" y1="18" y2="18" />
           </svg>
         </button>
-        <div className="flex flex-col gap-0">
+        <div className="flex min-w-0 flex-col gap-0">
           <Link
             href="/dashboard"
             className="text-primary flex items-center gap-2 font-semibold leading-tight"
@@ -70,7 +70,7 @@ export function Header({
             </span>
             <span className="hidden sm:inline">{APP_NAME}</span>
           </Link>
-          <span className="text-muted-foreground text-xs leading-tight">
+          <span className="text-muted-foreground min-w-0 truncate text-xs leading-tight" title={subtitle}>
             {subtitle}
           </span>
         </div>

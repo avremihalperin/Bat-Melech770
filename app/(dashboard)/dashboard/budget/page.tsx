@@ -40,57 +40,57 @@ export default async function BudgetPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-primary text-2xl font-bold">ניהול תקציב הסניף</h1>
-      <p className="text-muted-foreground">
+    <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">ניהול תקציב הסניף</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">
         כאן תוכלי לראות את היתרה הזמינה ולהעלות קבלות לקבלת החזרים מהמטה.
       </p>
 
       <Card className="border-primary/20 bg-gradient-to-br from-primary-50/40 to-card shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">יתרה נוכחית</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">יתרה נוכחית</CardTitle>
           <CardDescription>
             הקצאות מהמטה פחות קבלות שאושרו
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-3xl font-bold text-primary">
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
+          <p className="text-2xl font-bold text-primary sm:text-3xl">
             {formatCurrency(balance.balance)}
           </p>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
             מתוך {formatCurrency(balance.totalAllocations)} שהוקצו • {formatCurrency(balance.totalApprovedReceipts)} אושרו בקבלות
           </p>
         </CardContent>
       </Card>
 
       <Card className="border-primary/20 bg-card shadow-sm">
-        <CardHeader className="flex flex-row items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">העלאת קבלה לאישור</CardTitle>
+        <CardHeader className="flex flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">העלאת קבלה לאישור</CardTitle>
             <CardDescription>
               הזיני סכום וקישור לתמונה/קובץ של הקבלה. המטה יאשרו והתקציב יתעדכן.
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           <BudgetForm />
         </CardContent>
       </Card>
 
       <Card className="border-border shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">קבלות ששולחו</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">קבלות ששולחו</CardTitle>
           <CardDescription>סטטוס אישור במשרד</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!receipts?.length ? (
-            <p className="text-muted-foreground">עדיין לא הועלו קבלות.</p>
+            <p className="text-muted-foreground text-sm">עדיין לא הועלו קבלות.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {receipts.map((r) => (
                 <li
                   key={r.id}
-                  className="border-border flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2"
+                  className="border-border flex min-w-0 flex-col gap-2 rounded-lg border px-3 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
                 >
                   <div>
                     <p className="font-medium">{formatCurrency(Number(r.amount))}</p>

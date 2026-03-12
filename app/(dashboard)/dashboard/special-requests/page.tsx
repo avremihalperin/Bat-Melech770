@@ -20,14 +20,14 @@ export default async function SpecialRequestsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">בקשות מיוחדות</h1>
-      <p className="text-muted-foreground">טופס בקשה לפעילות שוברת שגרה.</p>
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">בקשות מיוחדות</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">טופס בקשה לפעילות שוברת שגרה.</p>
 
       <Card>
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">בקשה לפעילות שוברת שגרה</CardTitle>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">בקשה לפעילות שוברת שגרה</CardTitle>
             <CardDescription>הגישי בקשה לאישור המטה (בטיחות + תוכן)</CardDescription>
           </div>
           <SpecialRequestForm />
@@ -35,10 +35,10 @@ export default async function SpecialRequestsPage() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">הבקשות שלי</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">הבקשות שלי</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!requests?.length ? (
             <p className="text-muted-foreground">אין בקשות.</p>
           ) : (

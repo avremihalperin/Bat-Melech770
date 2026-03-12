@@ -33,18 +33,18 @@ export default async function BranchProfilePage() {
     .eq("branch_id", branchId);
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">פרופיל הסניף</h1>
-      <p className="text-muted-foreground">
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">פרופיל הסניף</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">
         שעות פעילות, אנשי צוות, סיכום כמותי של חניכות.
       </p>
 
       <Card className="border-primary/20 bg-gradient-to-br from-primary-50/30 to-card shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">{branch?.name ?? "פרופיל הסניף"}</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="min-w-0 truncate text-base sm:text-lg">{branch?.name ?? "פרופיל הסניף"}</CardTitle>
           <CardDescription>שעות פעילות והערות</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           <BranchProfileForm
             branchId={branchId}
             initialOpeningHours={profile?.opening_hours ?? ""}
@@ -54,8 +54,8 @@ export default async function BranchProfilePage() {
       </Card>
 
       <Card className="border-primary/20 bg-primary-50/20 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">סיכום כמותי</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">סיכום כמותי</CardTitle>
           <CardDescription>חניכות ואנשי צוות</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-6">

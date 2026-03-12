@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Assistant } from "next/font/google";
 import "./globals.css";
 
@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   description: "מערכת ניהול לארגון נוער חב\"ד",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="he" dir="rtl" className={assistant.variable}>
-      <body className={`${assistant.className} min-h-screen`}>
+      <body className={`${assistant.className} min-h-screen overflow-x-hidden`}>
         {children}
       </body>
     </html>

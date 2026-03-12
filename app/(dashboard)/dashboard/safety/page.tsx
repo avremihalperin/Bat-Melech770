@@ -20,13 +20,13 @@ export default async function SafetyPage() {
     .order("last_name");
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">תיק רפואי ובטיחות</h1>
-      <p className="text-muted-foreground">
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">תיק רפואי ובטיחות</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">
         רשימת חניכות עם אלרגיות/רגישויות, דרכי מניעה ופעולה בחירום.
       </p>
 
-      <div className="rounded-lg border border-red-200 bg-red-50/50 p-4 text-red-900">
+      <div className="rounded-lg border border-red-200 bg-red-50/50 p-3 text-sm text-red-900 sm:p-4">
         <p className="font-medium">
           שימי לב: אזור זה מכיל מידע רפואי רגיש. חובה לעיין בדרכי המניעה והפעולה
           עבור כל חניכה לפני כל פעילות.
@@ -34,9 +34,9 @@ export default async function SafetyPage() {
       </div>
 
       <Card className="border-destructive/20 bg-destructive/5 shadow-sm">
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">דיווח אירוע חריג</CardTitle>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">דיווח אירוע חריג</CardTitle>
             <CardDescription>כמעט ונפגע / חירום — נשלח לאחראית בטיחות</CardDescription>
           </div>
           <SafetyReportForm branchId={branchId} />
@@ -44,21 +44,21 @@ export default async function SafetyPage() {
       </Card>
 
       <Card className="border-primary/20 bg-primary-50/20 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">רשימת חניכות — נתונים רפואיים</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">רשימת חניכות — נתונים רפואיים</CardTitle>
           <CardDescription>
             אלרגיות, רגישויות והנחיות חירום. צפי בפרטים לפני כל פעילות.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!trainees?.length ? (
-            <p className="text-muted-foreground">אין חניכות רשומות.</p>
+            <p className="text-muted-foreground text-sm">אין חניכות רשומות.</p>
           ) : (
             <ul className="flex flex-col gap-3">
               {trainees.map((t) => (
                 <li
                   key={t.id}
-                  className="border-border rounded-lg border p-3"
+                  className="border-border rounded-lg border p-2.5 text-sm sm:p-3"
                 >
                   <p className="font-medium">
                     {t.first_name} {t.last_name}

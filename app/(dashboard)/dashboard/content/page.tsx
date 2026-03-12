@@ -16,22 +16,22 @@ export default async function ContentPage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">תוכן וארכיון</h1>
-      <p className="text-muted-foreground">הורדת חומרי פעילות, ארכיון סניף, העלאת תמונות.</p>
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">תוכן וארכיון</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">הורדת חומרי פעילות, ארכיון סניף, העלאת תמונות.</p>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">חומרי פעילות מהמשרד</CardTitle>
-          <CardDescription>מערכים, דפי משימה וחומרי עזר — להורדה</CardDescription>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">חומרי פעילות מהמשרד</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">מערכים, דפי משימה וחומרי עזר — להורדה</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!materials?.length ? (
-            <p className="text-muted-foreground">אין חומרים זמינים כרגע.</p>
+            <p className="text-muted-foreground text-sm">אין חומרים זמינים כרגע.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {materials.map((m) => (
-                <li key={m.id} className="flex items-center justify-between gap-2 rounded-lg border border-border p-2">
+                <li key={m.id} className="flex min-w-0 flex-col gap-1 rounded-lg border border-border p-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                   <span className="font-medium">{m.title}</span>
                   <a href={m.file_url} target="_blank" rel="noopener noreferrer" className="text-primary text-sm underline">
                     הורדה
@@ -44,20 +44,20 @@ export default async function ContentPage() {
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">ארכיון הסניף / העלאת תמונות</CardTitle>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">ארכיון הסניף / העלאת תמונות</CardTitle>
             <CardDescription>מסמכים ותמונות של הסניף לשיתוף המטה</CardDescription>
           </div>
           <BranchDocumentUploadForm branchId={branchId} />
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!branchDocs?.length ? (
-            <p className="text-muted-foreground">אין מסמכים או תמונות שהועלו.</p>
+            <p className="text-muted-foreground text-sm">אין מסמכים או תמונות שהועלו.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {branchDocs.map((d) => (
-                <li key={d.id} className="flex items-center justify-between gap-2 rounded-lg border border-border p-2">
+                <li key={d.id} className="flex min-w-0 flex-col gap-1 rounded-lg border border-border p-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                   <span>{d.name}</span>
                   <a href={d.file_url} target="_blank" rel="noopener noreferrer" className="text-primary text-sm underline">
                     צפייה

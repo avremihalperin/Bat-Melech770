@@ -40,8 +40,8 @@ export default async function ApprovalsPage() {
     : "בקשות הצטרפות ממתינות (צוות מטה)";
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-primary text-2xl font-bold">{title}</h1>
+    <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">{title}</h1>
       <Card>
         <CardHeader>
           <CardTitle>רשימת ממתינים</CardTitle>

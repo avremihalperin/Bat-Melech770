@@ -40,16 +40,16 @@ export default async function ActivitiesPage() {
   const past = (activities ?? []).filter((a) => a.scheduled_at < now || a.status !== "scheduled");
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">פעילויות (לוח)</h1>
-      <p className="text-muted-foreground">
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">פעילויות (לוח)</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">
         רשימות נוכחות, צ&#39;ק-ליסט התחלה וסיום פעילות.
       </p>
 
       <Card className="border-primary/20 bg-gradient-to-br from-primary-50/30 to-card shadow-sm">
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">הוסף פעילות חדשה</CardTitle>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">הוסף פעילות חדשה</CardTitle>
             <CardDescription>תכנון פעילות עם תאריך ושעה</CardDescription>
           </div>
           <ActivityAddForm branchId={branchId} />
@@ -58,16 +58,16 @@ export default async function ActivitiesPage() {
 
       {upcoming.length > 0 && (
         <Card className="border-primary/20 bg-primary-50/20 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg">פעילויות קרובות</CardTitle>
-            <CardDescription>צ&#39;ק-ליסט תחילת פעילות וצ&#39;ק-ליסט סיום פעילות</CardDescription>
+          <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+            <CardTitle className="text-base sm:text-lg">פעילויות קרובות</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">צ&#39;ק-ליסט תחילת פעילות וצ&#39;ק-ליסט סיום פעילות</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
             <ul className="flex flex-col gap-2">
               {upcoming.map((a) => (
                 <li
                   key={a.id}
-                  className="border-border flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3"
+                  className="border-border flex min-w-0 flex-col gap-2 rounded-lg border p-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
                 >
                   <div>
                     <p className="font-medium">{a.title}</p>
@@ -82,19 +82,19 @@ export default async function ActivitiesPage() {
       )}
 
       <Card className="border-border shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">כל הפעילויות</CardTitle>
-          <CardDescription>היסטוריה ומתוכננות</CardDescription>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">כל הפעילויות</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">היסטוריה ומתוכננות</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!activities?.length ? (
-            <p className="text-muted-foreground">אין פעילויות. הוסיפי פעילות חדשה.</p>
+            <p className="text-muted-foreground text-sm">אין פעילויות. הוסיפי פעילות חדשה.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {(past.length ? past : activities).map((a) => (
                 <li
                   key={a.id}
-                  className="border-border flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3"
+                  className="border-border flex min-w-0 flex-col gap-2 rounded-lg border p-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-3"
                 >
                   <div>
                     <p className="font-medium">{a.title}</p>

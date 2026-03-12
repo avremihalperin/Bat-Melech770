@@ -90,7 +90,7 @@ function ReceiptActions({ receiptId }: { receiptId: string }) {
           <input type="hidden" name="receipt_id" value={receiptId} />
           <label className="flex flex-col gap-1 text-sm">
             <span>סיבת דחייה (אופציונלי)</span>
-            <Input name="rejection_reason" type="text" placeholder="דורש סיבה" className="min-w-[180px]" />
+            <Input name="rejection_reason" type="text" placeholder="דורש סיבה" className="w-full min-w-0 sm:min-w-[180px]" />
           </label>
           <Button type="submit" variant="destructive" size="sm">
             דחייה

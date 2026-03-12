@@ -18,7 +18,7 @@ export default async function RegisterPage() {
     .order("name");
 
   return (
-    <div className="w-full max-w-lg">
+    <div className="w-full max-w-lg px-3 sm:px-0">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-xl">

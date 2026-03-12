@@ -80,21 +80,21 @@ export default async function DashboardPage({
     ]);
 
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex w-full min-w-0 flex-col gap-3">
         {isDemoViewingRole && viewRole === "branch_center" && (
-          <p className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-2 text-center text-sm font-medium text-primary">
+          <p className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-center text-xs font-medium text-primary sm:px-4 sm:py-2 sm:text-sm">
             דוגמה: כך נראה הדשבורד של מרכזת סניף
           </p>
         )}
-        <h1 className="text-primary text-xl font-bold">דשבורד</h1>
+        <h1 className="text-primary text-lg font-bold sm:text-xl">דשבורד</h1>
 
         {/* סרט זז — חדשות מהארגון */}
         <NewsTicker items={announcementsForTicker.map((a) => ({ id: a.id, title: a.title, body: a.body }))} />
 
-        {/* גריד — מרווחים בין המסגרות, תוכן ממלא את הכרטיס */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* גריד — מובייל: עמודה אחת רוחב מלא; טאבלט+: 2–4 עמודות */}
+        <div className="grid w-full min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           {/* תקציב — טורקיז */}
-          <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 p-3 shadow-sm">
+          <Card className="w-full min-w-0 border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 p-2.5 shadow-sm sm:p-3">
             <CardHeader className="p-0 pb-1">
               <CardTitle className="text-base">ניהול תקציב הסניף</CardTitle>
               <CardDescription className="text-xs">יתרה והעלאת קבלות</CardDescription>
@@ -102,7 +102,7 @@ export default async function DashboardPage({
             <CardContent className="p-0">
               <p className="text-2xl font-bold text-primary">{formatCurrency(balance.balance)}</p>
               <p className="text-muted-foreground text-xs">מתוך {formatCurrency(balance.totalAllocations)}</p>
-              <Button variant="gradient" size="sm" className="mt-2" asChild>
+              <Button variant="gradient" size="sm" className="mt-2 min-h-10 touch-manipulation sm:min-h-9" asChild>
                 <Link href="/dashboard/budget">+ העלאת קבלה</Link>
               </Button>
             </CardContent>
@@ -110,23 +110,23 @@ export default async function DashboardPage({
 
           {/* ימי הולדת — תוכן בגריד כך שאין שטח מת */}
           {birthdays.length > 0 && (
-            <Card className="border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 p-3 shadow-sm sm:col-span-2">
-              <CardHeader className="p-0 pb-2">
-                <CardTitle className="text-base">ימי הולדת קרובים</CardTitle>
+            <Card className="w-full min-w-0 border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 p-2.5 shadow-sm sm:col-span-2 sm:p-3">
+              <CardHeader className="p-0 pb-1.5 sm:pb-2">
+                <CardTitle className="text-sm font-semibold sm:text-base">ימי הולדת קרובים</CardTitle>
                 <CardDescription className="text-xs">30 הימים הקרובים</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
-                <ul className="grid w-full grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+                <ul className="grid w-full min-w-0 grid-cols-2 gap-1.5 text-xs sm:grid-cols-3 sm:gap-2 sm:text-sm">
                   {birthdays.slice(0, 6).map((b) => (
-                    <li key={b.id} className="flex items-center justify-between gap-2 rounded border border-pink-100 bg-white/50 px-2 py-1.5">
-                      <span className="font-medium truncate">{b.first_name} {b.last_name}</span>
-                      <span className="text-muted-foreground shrink-0 text-xs">
+                    <li key={b.id} className="flex items-center justify-between gap-1 rounded border border-pink-100 bg-white/50 px-1.5 py-1 sm:px-2 sm:py-1.5">
+                      <span className="min-w-0 font-medium truncate">{b.first_name} {b.last_name}</span>
+                      <span className="text-muted-foreground shrink-0 text-[10px] sm:text-xs">
                         {b.daysUntil === 0 ? "היום!" : b.daysUntil === 1 ? "מחר" : `בעוד ${b.daysUntil}`}
                       </span>
                     </li>
                   ))}
                 </ul>
-                <Button variant="ghost" size="sm" className="mt-2 w-full sm:w-auto" asChild>
+                <Button variant="ghost" size="sm" className="mt-1.5 min-h-10 w-full touch-manipulation sm:mt-2 sm:min-h-9 sm:w-auto" asChild>
                   <Link href="/dashboard/trainees">לחניכות וצוות</Link>
                 </Button>
               </CardContent>
@@ -135,7 +135,7 @@ export default async function DashboardPage({
 
           {/* פעילויות — מסגרת קטנה */}
           {upcoming.length > 0 && (
-            <Card className="border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 p-3 shadow-sm">
+            <Card className="w-full min-w-0 border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 p-2.5 shadow-sm sm:p-3">
               <CardHeader className="p-0 pb-1">
                 <CardTitle className="text-base">פעילויות קרובות</CardTitle>
               </CardHeader>
@@ -157,16 +157,16 @@ export default async function DashboardPage({
 
           {/* הודעות — תוכן בגריד כך שאין שטח מת */}
           {announcements.length > 0 && (
-            <Card className="border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 p-3 shadow-sm sm:col-span-2">
-              <CardHeader className="p-0 pb-2">
-                <CardTitle className="text-base">הודעות מהמשרד</CardTitle>
+            <Card className="w-full min-w-0 border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 p-2.5 shadow-sm sm:col-span-2 sm:p-3">
+              <CardHeader className="p-0 pb-1.5 sm:pb-2">
+                <CardTitle className="text-sm font-semibold sm:text-base">הודעות מהמשרד</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <ul className="grid w-full grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+                <ul className="grid w-full min-w-0 grid-cols-1 gap-1.5 text-xs sm:grid-cols-2 sm:gap-2 sm:text-sm">
                   {announcements.slice(0, 4).map((a) => (
-                    <li key={a.id} className="rounded border border-yellow-200/80 bg-white/60 px-2 py-1.5">
-                      <p className="font-medium">{a.title}</p>
-                      <p className="text-muted-foreground truncate text-xs">{a.body}</p>
+                    <li key={a.id} className="min-w-0 rounded border border-yellow-200/80 bg-white/60 px-1.5 py-1 sm:px-2 sm:py-1.5">
+                      <p className="font-medium truncate">{a.title}</p>
+                      <p className="text-muted-foreground truncate text-[10px] sm:text-xs">{a.body}</p>
                     </li>
                   ))}
                 </ul>
@@ -174,12 +174,12 @@ export default async function DashboardPage({
             </Card>
           )}
 
-          {/* כפתורי פעולה — ליד הודעות באותה שורה */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:col-span-2">
-            <Button variant="default" size="sm" asChild>
+          {/* כפתורי פעולה — מובייל: עמודה; טאבלט+: שורה */}
+          <div className="flex w-full min-w-0 flex-col gap-2 sm:col-span-2 sm:flex-row sm:flex-wrap sm:justify-center">
+            <Button variant="default" size="sm" className="min-h-11 w-full touch-manipulation sm:min-h-9 sm:w-auto" asChild>
               <Link href="/dashboard/activities">הוסף פעילות</Link>
             </Button>
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" size="sm" className="min-h-11 w-full touch-manipulation sm:min-h-9 sm:w-auto" asChild>
               <Link href="/dashboard/activities">צ&#39;ק-ליסט פעילות</Link>
             </Button>
           </div>

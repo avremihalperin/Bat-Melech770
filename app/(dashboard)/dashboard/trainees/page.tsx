@@ -31,29 +31,29 @@ export default async function TraineesPage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">
         רשימת חניכות וצוות הסניף
       </h1>
-      <p className="text-muted-foreground">
+      <p className="text-muted-foreground text-sm sm:text-base">
         טבלאות חניכות וצוות, הוספת חניכה או איש צוות.
       </p>
 
       {/* חניכות */}
       <Card className="border-primary/20 bg-gradient-to-br from-primary-50/30 to-card shadow-sm">
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">חניכות</CardTitle>
-            <CardDescription>נתונים מלאים — שם, ת.ז., טלפון, כתובת, פרטי הורים, מייל</CardDescription>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">חניכות</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">נתונים מלאים — שם, ת.ז., טלפון, כתובת, פרטי הורים, מייל</CardDescription>
           </div>
           <TraineeAddForm />
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!trainees?.length ? (
             <p className="text-muted-foreground">אין חניכות רשומות. הוסיפי חניכה חדשה.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px] text-start text-sm">
+            <div className="-mx-3 overflow-x-auto sm:mx-0">
+              <table className="w-full min-w-[600px] text-start text-xs sm:text-sm">
                 <thead>
                   <tr className="border-border border-b">
                     <th className="pb-2 pe-2 text-start font-medium">שם מלא</th>
@@ -89,19 +89,19 @@ export default async function TraineesPage() {
 
       {/* צוות */}
       <Card className="border-primary/20 bg-primary-50/20 shadow-sm">
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
-          <div>
-            <CardTitle className="text-lg">אנשי צוות</CardTitle>
-            <CardDescription>צוות הסניף</CardDescription>
+        <CardHeader className="flex flex-col gap-4 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 sm:py-4">
+          <div className="min-w-0">
+            <CardTitle className="text-base sm:text-lg">אנשי צוות</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">צוות הסניף</CardDescription>
           </div>
           <StaffAddForm />
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!staffList?.length ? (
-            <p className="text-muted-foreground">אין אנשי צוות. הוסיפי איש צוות.</p>
+            <p className="text-muted-foreground text-sm">אין אנשי צוות. הוסיפי איש צוות.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[400px] text-start text-sm">
+            <div className="-mx-3 overflow-x-auto sm:mx-0">
+              <table className="w-full min-w-[400px] text-start text-xs sm:text-sm">
                 <thead>
                   <tr className="border-border border-b">
                     <th className="pb-2 pe-2 text-start font-medium">שם</th>

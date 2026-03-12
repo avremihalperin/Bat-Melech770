@@ -27,27 +27,27 @@ export default async function MessagesPage() {
     : { data: [] };
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-primary text-2xl font-bold">הודעות</h1>
-      <p className="text-muted-foreground">תיבת דואר פנימית להתכתבות מול מחלקות המשרד.</p>
+    <div className="flex min-w-0 flex-col gap-6 sm:gap-8">
+      <h1 className="text-primary text-xl font-bold sm:text-2xl">הודעות</h1>
+      <p className="text-muted-foreground text-sm sm:text-base">תיבת דואר פנימית להתכתבות מול מחלקות המשרד.</p>
 
       {(profile.role === "secretary" || profile.role === "admin") && branches && branches.length > 0 && (
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">שליחת הודעה לסניף</CardTitle>
+          <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+            <CardTitle className="text-base sm:text-lg">שליחת הודעה לסניף</CardTitle>
             <CardDescription>הודעה תגיע לתיבת ההודעות של הסניף</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
             <SendMessageForm branches={branches} />
           </CardContent>
         </Card>
       )}
 
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">תיבת דואר נכנס</CardTitle>
+        <CardHeader className="px-3 py-3 sm:px-6 sm:py-4">
+          <CardTitle className="text-base sm:text-lg">תיבת דואר נכנס</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3 sm:px-6 sm:pb-6">
           {!messages?.length ? (
             <p className="text-muted-foreground">אין הודעות.</p>
           ) : (
