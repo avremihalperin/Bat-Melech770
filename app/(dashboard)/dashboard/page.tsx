@@ -54,15 +54,17 @@ export default async function DashboardPage({
 }) {
   const profile = await requireApprovedUser();
   const { view: viewParam, branch_id: branchIdParam, org: orgParam } = await searchParams;
-  const viewRole = (viewParam && ALL_VIEW_ROLES.includes(viewParam as ViewRole))
-    ? (viewParam as ViewRole)
-    : null;
-  const isDemoViewingRole = viewRole && isDemoUser(profile.email ?? undefined);
   const cookieStore = await cookies();
+  const demoNavRole = cookieStore.get("demo_nav_role")?.value;
   const demoBranchId = cookieStore.get("demo_branch_id")?.value ?? branchIdParam;
 
-  const effectiveRole: ViewRole | null = isDemoViewingRole ? viewRole : null;
-  const showAsRole = effectiveRole ?? (profile.role as ViewRole);
+  const isDemo = isDemoUser(profile.email ?? undefined);
+  const viewFromUrl = (viewParam && ALL_VIEW_ROLES.includes(viewParam as ViewRole)) ? (viewParam as ViewRole) : null;
+  const viewFromCookie = (demoNavRole && ALL_VIEW_ROLES.includes(demoNavRole as ViewRole)) ? (demoNavRole as ViewRole) : null;
+  const viewRole = viewFromUrl ?? viewFromCookie;
+  const isDemoViewingRole = isDemo && viewRole != null;
+
+  const showAsRole: ViewRole = isDemo && viewFromCookie ? viewFromCookie : (viewFromUrl ?? (profile.role as ViewRole));
 
   const branchIdForBranchView =
     profile.role === "branch_center" && profile.branch_id && !isDemoViewingRole
