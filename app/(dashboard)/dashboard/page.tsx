@@ -80,131 +80,109 @@ export default async function DashboardPage({
     ]);
 
     return (
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
         {isDemoViewingRole && viewRole === "branch_center" && (
           <p className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-2 text-center text-sm font-medium text-primary">
             דוגמה: כך נראה הדשבורד של מרכזת סניף
           </p>
         )}
-        <h1 className="text-primary text-2xl font-bold">דשבורד</h1>
+        <h1 className="text-primary text-xl font-bold">דשבורד</h1>
 
         {/* סרט זז — חדשות מהארגון */}
         <NewsTicker items={announcementsForTicker.map((a) => ({ id: a.id, title: a.title, body: a.body }))} />
 
-        {/* כרטיסים — גובה ורוחב לפי תוכן, כל מסגרת עם רקע/גוון ייחודי */}
-        <div className="flex flex-wrap gap-4">
+        {/* גריד — מרווחים בין המסגרות, תוכן ממלא את הכרטיס */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* תקציב — טורקיז */}
-          <Card className="w-fit max-w-full border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg">ניהול תקציב הסניף</CardTitle>
-              <CardDescription>
-                כאן תוכלי לראות את היתרה ולהעלות קבלות.
-              </CardDescription>
+          <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 p-3 shadow-sm">
+            <CardHeader className="p-0 pb-1">
+              <CardTitle className="text-base">ניהול תקציב הסניף</CardTitle>
+              <CardDescription className="text-xs">יתרה והעלאת קבלות</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-3xl font-bold text-primary">
-                {formatCurrency(balance.balance)}
-              </p>
-              <p className="text-muted-foreground mt-1 text-sm">
-                מתוך {formatCurrency(balance.totalAllocations)} שהוקצו
-              </p>
-              <Button variant="gradient" className="mt-3" asChild>
-                <Link href="/dashboard/budget">+ העלאת קבלה לאישור</Link>
+            <CardContent className="p-0">
+              <p className="text-2xl font-bold text-primary">{formatCurrency(balance.balance)}</p>
+              <p className="text-muted-foreground text-xs">מתוך {formatCurrency(balance.totalAllocations)}</p>
+              <Button variant="gradient" size="sm" className="mt-2" asChild>
+                <Link href="/dashboard/budget">+ העלאת קבלה</Link>
               </Button>
             </CardContent>
           </Card>
 
-          {/* ימי הולדת — גוון ורוד/אפרסק */}
+          {/* ימי הולדת — תוכן בגריד כך שאין שטח מת */}
           {birthdays.length > 0 && (
-            <Card className="w-fit max-w-full border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 shadow-sm">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">ימי הולדת קרובים</CardTitle>
-                <CardDescription>חניכות הסניף — 30 הימים הקרובים</CardDescription>
+            <Card className="border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 p-3 shadow-sm sm:col-span-2">
+              <CardHeader className="p-0 pb-2">
+                <CardTitle className="text-base">ימי הולדת קרובים</CardTitle>
+                <CardDescription className="text-xs">30 הימים הקרובים</CardDescription>
               </CardHeader>
-              <CardContent className="pt-0">
-                <ul className="flex flex-col gap-2">
-                  {birthdays.map((b) => (
-                    <li
-                      key={b.id}
-                      className="flex items-center justify-between gap-2 rounded-lg border border-pink-100 px-3 py-2"
-                    >
-                      <span className="font-medium">
-                        {b.first_name} {b.last_name}
-                      </span>
-                      <span className="text-muted-foreground text-sm">
-                        {b.daysUntil === 0 ? "היום!" : b.daysUntil === 1 ? "מחר" : `בעוד ${b.daysUntil} ימים`}
+              <CardContent className="p-0">
+                <ul className="grid w-full grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+                  {birthdays.slice(0, 6).map((b) => (
+                    <li key={b.id} className="flex items-center justify-between gap-2 rounded border border-pink-100 bg-white/50 px-2 py-1.5">
+                      <span className="font-medium truncate">{b.first_name} {b.last_name}</span>
+                      <span className="text-muted-foreground shrink-0 text-xs">
+                        {b.daysUntil === 0 ? "היום!" : b.daysUntil === 1 ? "מחר" : `בעוד ${b.daysUntil}`}
                       </span>
                     </li>
                   ))}
                 </ul>
-                <Button variant="ghost" size="sm" className="mt-2" asChild>
+                <Button variant="ghost" size="sm" className="mt-2 w-full sm:w-auto" asChild>
                   <Link href="/dashboard/trainees">לחניכות וצוות</Link>
                 </Button>
               </CardContent>
             </Card>
           )}
 
-          {/* פעילויות — גוון צהוב/כתום */}
+          {/* פעילויות — מסגרת קטנה */}
           {upcoming.length > 0 && (
-            <Card className="w-fit max-w-full border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 shadow-sm">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">פעילויות קרובות</CardTitle>
-                <CardDescription>הפעילויות המתוכננות הבאות</CardDescription>
+            <Card className="border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 p-3 shadow-sm">
+              <CardHeader className="p-0 pb-1">
+                <CardTitle className="text-base">פעילויות קרובות</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <ul className="flex flex-col gap-2">
-                  {upcoming.map((a) => (
-                    <li
-                      key={a.id}
-                      className="flex items-center justify-between gap-2 rounded-lg border border-amber-200/80 px-3 py-2"
-                    >
-                      <span className="font-medium">{a.title}</span>
-                      <span className="text-muted-foreground text-sm">
-                        {formatDate(a.scheduled_at)}
-                      </span>
+              <CardContent className="p-0">
+                <ul className="space-y-1 text-sm">
+                  {upcoming.slice(0, 3).map((a) => (
+                    <li key={a.id} className="flex justify-between gap-2 rounded border border-amber-200/80 px-2 py-1">
+                      <span className="font-medium truncate">{a.title}</span>
+                      <span className="text-muted-foreground shrink-0 text-xs">{formatDate(a.scheduled_at)}</span>
                     </li>
                   ))}
                 </ul>
-                <Button variant="ghost" size="sm" className="mt-2" asChild>
-                  <Link href="/dashboard/activities">הצגי את כל הפעילויות</Link>
+                <Button variant="ghost" size="sm" className="mt-1" asChild>
+                  <Link href="/dashboard/activities">הצגי הכל</Link>
                 </Button>
               </CardContent>
             </Card>
           )}
 
-          {/* הודעות — גוון לימון/צהוב רך */}
+          {/* הודעות — תוכן בגריד כך שאין שטח מת */}
           {announcements.length > 0 && (
-            <Card className="w-fit max-w-full border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 shadow-sm">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">הודעות מהמשרד</CardTitle>
+            <Card className="border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 p-3 shadow-sm sm:col-span-2">
+              <CardHeader className="p-0 pb-2">
+                <CardTitle className="text-base">הודעות מהמשרד</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <ul className="flex flex-col gap-2">
-                  {announcements.map((a) => (
-                    <li
-                      key={a.id}
-                      className="rounded-lg border border-yellow-200/80 bg-white/60 px-3 py-2"
-                    >
+              <CardContent className="p-0">
+                <ul className="grid w-full grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+                  {announcements.slice(0, 4).map((a) => (
+                    <li key={a.id} className="rounded border border-yellow-200/80 bg-white/60 px-2 py-1.5">
                       <p className="font-medium">{a.title}</p>
-                      <p className="text-muted-foreground text-sm">{a.body}</p>
+                      <p className="text-muted-foreground truncate text-xs">{a.body}</p>
                     </li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
           )}
-        </div>
 
-        {/* כפתורי פעולה מהירה */}
-        <div className="flex flex-wrap gap-3">
-          <Button variant="default" asChild>
-            <Link href="/dashboard/activities">הוסף פעילות חדשה</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href="/dashboard/activities">
-              צ&#39;ק-ליסט פעילות קרובה
-            </Link>
-          </Button>
+          {/* כפתורי פעולה — ליד הודעות באותה שורה */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:col-span-2">
+            <Button variant="default" size="sm" asChild>
+              <Link href="/dashboard/activities">הוסף פעילות</Link>
+            </Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/dashboard/activities">צ&#39;ק-ליסט פעילות</Link>
+            </Button>
+          </div>
         </div>
       </div>
     );

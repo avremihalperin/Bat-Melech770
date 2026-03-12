@@ -80,6 +80,11 @@ export default function LoginPage() {
       </Card>
 
       <div className="mt-2 text-center text-[11px] leading-relaxed text-muted-foreground">
+        <div className="mb-1 flex justify-center">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-muted-foreground/50 text-[10px] font-semibold">
+            C
+          </span>
+        </div>
         <div>כל הזכויות שמורות לא. הלפרין</div>
         <div>avremihalperin@gmail.com</div>
         <div>אין לעשות שימוש ללא רשות בכתב בהתאם לכל דין</div>
