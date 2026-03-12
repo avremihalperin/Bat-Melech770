@@ -1,23 +1,8 @@
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AllocateBudgetForm } from "./allocate-budget-form";
 import { ReceiptsPendingList } from "./receipts-pending-list";
-
-function formatCurrency(n: number): string {
-  return new Intl.NumberFormat("he-IL", {
-    style: "currency",
-    currency: "ILS",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(n);
-}
 
 export default async function FinancePage() {
   await requireRole(["secretary", "admin"]);
@@ -65,7 +50,7 @@ export default async function FinancePage() {
           {!pendingReceipts?.length ? (
             <p className="text-muted-foreground">אין קבלות ממתינות.</p>
           ) : (
-            <ReceiptsPendingList receipts={pendingReceipts} formatCurrency={formatCurrency} />
+            <ReceiptsPendingList receipts={pendingReceipts} />
           )}
         </CardContent>
       </Card>

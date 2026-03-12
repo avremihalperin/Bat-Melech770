@@ -92,6 +92,51 @@ export async function getUpcomingActivities(
   return (data ?? []) as UpcomingActivity[];
 }
 
+export interface UpcomingBirthday {
+  id: string;
+  first_name: string;
+  last_name: string;
+  birth_date: string;
+  daysUntil: number;
+}
+
+/** ימי הולדת קרובים של חניכות הסניף (30 הימים הקרובים) */
+export async function getUpcomingBirthdays(
+  branchId: string,
+  limit = 10
+): Promise<UpcomingBirthday[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("trainees")
+    .select("id, first_name, last_name, birth_date")
+    .eq("branch_id", branchId)
+    .not("birth_date", "is", null);
+
+  if (!data?.length) return [];
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const results: UpcomingBirthday[] = [];
+
+  for (const t of data) {
+    const bd = new Date(t.birth_date as string);
+    const next = new Date(today.getFullYear(), bd.getMonth(), bd.getDate());
+    if (next < today) next.setFullYear(today.getFullYear() + 1);
+    const daysUntil = Math.ceil((next.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (daysUntil > 30) continue;
+    results.push({
+      id: t.id,
+      first_name: t.first_name,
+      last_name: t.last_name,
+      birth_date: t.birth_date as string,
+      daysUntil,
+    });
+  }
+
+  results.sort((a, b) => a.daysUntil - b.daysUntil);
+  return results.slice(0, limit);
+}
+
 /** מזכירה: מספר הרשמות ממתינות (מרכזות + צוות) */
 export async function getPendingApprovalsCount(): Promise<{ branchCenters: number; staff: number }> {
   const supabase = await createClient();

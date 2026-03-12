@@ -6,12 +6,14 @@ import {
   getBranchBalance,
   getActiveAnnouncements,
   getUpcomingActivities,
+  getUpcomingBirthdays,
   getPendingApprovalsCount,
   getPendingSpecialRequests,
   getRecentSafetyReports,
   getAdminStats,
   getUpcomingActivitiesAllBranches,
 } from "@/lib/dashboard";
+import { NewsTicker } from "@/components/dashboard/news-ticker";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -41,6 +43,9 @@ type ViewRole = "secretary" | "branch_supervisor" | "content_manager" | "admin" 
 
 const ALL_VIEW_ROLES: ViewRole[] = ["secretary", "branch_supervisor", "content_manager", "admin", "safety_officer", "branch_center"];
 
+/** דף דינמי — searchParams (view, branch_id, org) חייבים להתעדכן בכל כניסה */
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -66,10 +71,12 @@ export default async function DashboardPage({
         : null;
 
   if (branchIdForBranchView) {
-    const [balance, announcements, upcoming] = await Promise.all([
+    const [balance, announcements, announcementsForTicker, upcoming, birthdays] = await Promise.all([
       getBranchBalance(branchIdForBranchView),
       getActiveAnnouncements(5),
+      getActiveAnnouncements(15),
       getUpcomingActivities(branchIdForBranchView, 3),
+      getUpcomingBirthdays(branchIdForBranchView, 10),
     ]);
 
     return (
@@ -81,48 +88,112 @@ export default async function DashboardPage({
         )}
         <h1 className="text-primary text-2xl font-bold">דשבורד</h1>
 
-        {/* תקציב נוכחי */}
-        <Card className="border-primary/20 bg-gradient-to-br from-primary-50/40 to-card shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg">ניהול תקציב הסניף</CardTitle>
-            <CardDescription>
-              כאן תוכלי לראות את היתרה הזמינה ולהעלות קבלות לקבלת החזרים מהמטה.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-primary">
-              {formatCurrency(balance.balance)}
-            </p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              יתרה זמינה מתוך {formatCurrency(balance.totalAllocations)} שהוקצו
-            </p>
-            <Button variant="gradient" className="mt-4" asChild>
-              <Link href="/dashboard/budget">+ העלאת קבלה לאישור</Link>
-            </Button>
-          </CardContent>
-        </Card>
+        {/* סרט זז — חדשות מהארגון */}
+        <NewsTicker items={announcementsForTicker.map((a) => ({ id: a.id, title: a.title, body: a.body }))} />
 
-        {/* הודעות מתגלגלות */}
-        {announcements.length > 0 && (
-          <Card className="border-accent/20 shadow-sm" style={{ background: "linear-gradient(135deg, hsl(45,95%,98%) 0%, hsl(25,95%,97%) 100%)" }}>
-            <CardHeader>
-              <CardTitle className="text-lg">הודעות מהמשרד</CardTitle>
+        {/* כרטיסים — גובה ורוחב לפי תוכן, כל מסגרת עם רקע/גוון ייחודי */}
+        <div className="flex flex-wrap gap-4">
+          {/* תקציב — טורקיז */}
+          <Card className="w-fit max-w-full border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 shadow-sm">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">ניהול תקציב הסניף</CardTitle>
+              <CardDescription>
+                כאן תוכלי לראות את היתרה ולהעלות קבלות.
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <ul className="flex flex-col gap-2">
-                {announcements.map((a) => (
-                  <li
-                    key={a.id}
-                    className="border-border rounded-lg border bg-muted/30 px-3 py-2"
-                  >
-                    <p className="font-medium">{a.title}</p>
-                    <p className="text-muted-foreground text-sm">{a.body}</p>
-                  </li>
-                ))}
-              </ul>
+            <CardContent className="pt-0">
+              <p className="text-3xl font-bold text-primary">
+                {formatCurrency(balance.balance)}
+              </p>
+              <p className="text-muted-foreground mt-1 text-sm">
+                מתוך {formatCurrency(balance.totalAllocations)} שהוקצו
+              </p>
+              <Button variant="gradient" className="mt-3" asChild>
+                <Link href="/dashboard/budget">+ העלאת קבלה לאישור</Link>
+              </Button>
             </CardContent>
           </Card>
-        )}
+
+          {/* ימי הולדת — גוון ורוד/אפרסק */}
+          {birthdays.length > 0 && (
+            <Card className="w-fit max-w-full border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 shadow-sm">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">ימי הולדת קרובים</CardTitle>
+                <CardDescription>חניכות הסניף — 30 הימים הקרובים</CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <ul className="flex flex-col gap-2">
+                  {birthdays.map((b) => (
+                    <li
+                      key={b.id}
+                      className="flex items-center justify-between gap-2 rounded-lg border border-pink-100 px-3 py-2"
+                    >
+                      <span className="font-medium">
+                        {b.first_name} {b.last_name}
+                      </span>
+                      <span className="text-muted-foreground text-sm">
+                        {b.daysUntil === 0 ? "היום!" : b.daysUntil === 1 ? "מחר" : `בעוד ${b.daysUntil} ימים`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="ghost" size="sm" className="mt-2" asChild>
+                  <Link href="/dashboard/trainees">לחניכות וצוות</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* פעילויות — גוון צהוב/כתום */}
+          {upcoming.length > 0 && (
+            <Card className="w-fit max-w-full border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 shadow-sm">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">פעילויות קרובות</CardTitle>
+                <CardDescription>הפעילויות המתוכננות הבאות</CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <ul className="flex flex-col gap-2">
+                  {upcoming.map((a) => (
+                    <li
+                      key={a.id}
+                      className="flex items-center justify-between gap-2 rounded-lg border border-amber-200/80 px-3 py-2"
+                    >
+                      <span className="font-medium">{a.title}</span>
+                      <span className="text-muted-foreground text-sm">
+                        {formatDate(a.scheduled_at)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="ghost" size="sm" className="mt-2" asChild>
+                  <Link href="/dashboard/activities">הצגי את כל הפעילויות</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* הודעות — גוון לימון/צהוב רך */}
+          {announcements.length > 0 && (
+            <Card className="w-fit max-w-full border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 shadow-sm">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">הודעות מהמשרד</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <ul className="flex flex-col gap-2">
+                  {announcements.map((a) => (
+                    <li
+                      key={a.id}
+                      className="rounded-lg border border-yellow-200/80 bg-white/60 px-3 py-2"
+                    >
+                      <p className="font-medium">{a.title}</p>
+                      <p className="text-muted-foreground text-sm">{a.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+        </div>
 
         {/* כפתורי פעולה מהירה */}
         <div className="flex flex-wrap gap-3">
@@ -135,34 +206,6 @@ export default async function DashboardPage({
             </Link>
           </Button>
         </div>
-
-        {/* פעילויות קרובות */}
-        {upcoming.length > 0 && (
-          <Card className="border-primary/20 bg-primary-50/30 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg">פעילויות קרובות</CardTitle>
-              <CardDescription>הפעילויות המתוכננות הבאות</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="flex flex-col gap-2">
-                {upcoming.map((a) => (
-                  <li
-                    key={a.id}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-border px-3 py-2"
-                  >
-                    <span className="font-medium">{a.title}</span>
-                    <span className="text-muted-foreground text-sm">
-                      {formatDate(a.scheduled_at)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button variant="ghost" size="sm" className="mt-2" asChild>
-                <Link href="/dashboard/activities">הצגי את כל הפעילויות</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        )}
       </div>
     );
   }

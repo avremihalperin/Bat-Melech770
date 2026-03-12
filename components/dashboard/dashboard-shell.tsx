@@ -35,7 +35,11 @@ export function DashboardShell({
           onMenuClick={() => setSidebarOpen((o) => !o)}
           signOutAction={signOutAction}
         />
-        <main className="flex-1 overflow-auto bg-gradient-to-b from-primary-50/30 to-background p-4 md:p-6">{children}</main>
+        <main className="flex-1 overflow-auto bg-gradient-to-b from-primary-50/30 to-background p-4 md:p-6">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

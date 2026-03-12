@@ -52,7 +52,7 @@ export default async function DemoNavPage() {
             כל כפתור פותח את הדשבורד האמיתי של התפקיד — אותם נתונים ומסכים
           </p>
           <div className="mb-4 flex flex-wrap justify-center gap-3">
-            <Link
+            <a
               href="/dashboard?view=admin&org=chabad"
               className="rounded-xl px-5 py-3 font-medium text-white shadow-md transition hover:opacity-90"
               style={{
@@ -60,17 +60,17 @@ export default async function DemoNavPage() {
               }}
             >
               הנהלת ארגון נוער חב&quot;ד
-            </Link>
+            </a>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {VIEW_ROLES.map(({ view, label }) => (
-              <Link
+              <a
                 key={view}
-                href={`/dashboard?view=${view}`}
+                href={`/dashboard?view=${encodeURIComponent(view)}`}
                 className="rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground shadow-md transition hover:opacity-90"
               >
                 {label}
-              </Link>
+              </a>
             ))}
           </div>
         </section>

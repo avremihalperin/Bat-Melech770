@@ -58,6 +58,15 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-assistant)", "system-ui", "sans-serif"],
       },
+      keyframes: {
+        ticker: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        ticker: "ticker 90s linear infinite",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

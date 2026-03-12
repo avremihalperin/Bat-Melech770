@@ -17,11 +17,18 @@ type ReceiptRow = {
 
 export function ReceiptsPendingList({
   receipts,
-  formatCurrency,
 }: {
   receipts: ReceiptRow[];
-  formatCurrency: (n: number) => string;
 }) {
+  function formatCurrency(n: number): string {
+    return new Intl.NumberFormat("he-IL", {
+      style: "currency",
+      currency: "ILS",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(n);
+  }
+
   return (
     <ul className="flex flex-col gap-3">
       {receipts.map((r) => {

@@ -78,6 +78,12 @@ export default function LoginPage() {
           </Button>
         </CardFooter>
       </Card>
+
+      <div className="mt-2 text-center text-[11px] leading-relaxed text-muted-foreground">
+        <div>כל הזכויות שמורות לא. הלפרין</div>
+        <div>avremihalperin@gmail.com</div>
+        <div>אין לעשות שימוש ללא רשות בכתב בהתאם לכל דין</div>
+      </div>
     </div>
   );
 }

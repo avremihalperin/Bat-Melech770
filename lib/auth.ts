@@ -3,9 +3,11 @@
  * יש לקרוא רק בצד שרת (createClient מ־server).
  */
 
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile, ProfileWithBranch, UserRole } from "@/types/database";
 import { redirect } from "next/navigation";
+import { isDemoUser } from "@/lib/demo";
 
 /**
  * מחזיר את הפרופיל של המשתמש המחובר, או null אם אין פרופיל.
@@ -68,9 +70,19 @@ export async function getMyBranchId(): Promise<string | null> {
 
 /**
  * דורש שמשתמש יהיה מאושר ושייך לסניף (מרכזת). מחזיר את ה־branch_id.
+ * משתמש דמו במצב "מרכזת סניף" (demo_nav_role=branch_center): משתמש ב־demo_branch_id מהקוקי.
  */
 export async function requireBranch(): Promise<string> {
   const profile = await requireApprovedUser();
-  if (!profile.branch_id) redirect("/dashboard");
-  return profile.branch_id;
+  if (profile.branch_id) return profile.branch_id;
+
+  // דמו: אם צופים כ־מרכזת סניף — השתמש ב־branch_id מהקוקי
+  if (isDemoUser(profile.email ?? undefined)) {
+    const cookieStore = await cookies();
+    const demoNavRole = cookieStore.get("demo_nav_role")?.value;
+    const demoBranchId = cookieStore.get("demo_branch_id")?.value;
+    if (demoNavRole === "branch_center" && demoBranchId) return demoBranchId;
+  }
+
+  redirect("/dashboard");
 }
