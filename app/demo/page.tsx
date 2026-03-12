@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { requireApprovedUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { isDemoUser } from "@/lib/demo";
+import { BranchList } from "./branch-list";
 
 const VIEW_ROLES: { view: string; label: string }[] = [
   { view: "admin", label: "מנהלת בת מלך" },
@@ -163,36 +164,13 @@ export default async function DemoNavPage() {
           </div>
         </section>
 
-        {/* סניפים — דשבורד מרכזת סניף או פרופיל וצוות */}
+        {/* סניפים — במובייל: כותרות נפתחות; במסך גדול: שורה עם כפתורים, בלי רווח מיותר */}
         <section>
           <h2 className="text-foreground mb-3 text-lg font-semibold">סניפים</h2>
           <p className="text-muted-foreground mb-4 text-sm">
             לכל סניף: צפייה בדשבורד של מרכזת הסניף (תקציב, הודעות, פעילויות) או במסך פרופיל הסניף, חניכות וצוות.
           </p>
-          <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
-            {orderedBranches.map((b) => (
-              <div
-                key={b.id}
-                className="flex flex-wrap items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card px-3 py-3 sm:justify-between sm:px-4"
-              >
-                <span className="font-medium text-foreground">{b.name}</span>
-                <div className="flex flex-wrap gap-2">
-                  <Link
-                    href={`/dashboard?view=branch_center&branch_id=${b.id}`}
-                    className="min-h-[40px] min-w-[44px] touch-manipulation rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
-                  >
-                    דשבורד סניף
-                  </Link>
-                  <Link
-                    href={`/dashboard/users-branches/branch/${b.id}`}
-                    className="min-h-[40px] min-w-[44px] touch-manipulation rounded-lg border border-primary/40 bg-background px-3 py-2 text-xs font-medium text-foreground transition hover:bg-primary/10"
-                  >
-                    פרופיל וצוות
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <BranchList branches={orderedBranches} />
         </section>
       </div>
     </div>

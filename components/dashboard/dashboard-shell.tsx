@@ -22,13 +22,13 @@ export function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen w-full min-w-0">
       <Sidebar
         items={navItems}
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Header
           subtitle={subtitle}
           notificationCount={notificationCount}

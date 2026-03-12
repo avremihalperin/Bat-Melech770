@@ -24,7 +24,7 @@ export function Header({
         <button
           type="button"
           aria-label="פתח תפריט"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-foreground hover:bg-muted md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-foreground hover:bg-muted lg:hidden"
           onClick={onMenuClick}
         >
           <svg
@@ -68,7 +68,7 @@ export function Header({
                 className="h-9 w-12 object-contain"
               />
             </span>
-            <span className="hidden sm:inline">{APP_NAME}</span>
+            <span className="hidden lg:inline">{APP_NAME}</span>
           </Link>
           <span className="text-muted-foreground min-w-0 truncate text-xs leading-tight" title={subtitle}>
             {subtitle}

@@ -14,6 +14,7 @@ import {
   getUpcomingActivitiesAllBranches,
 } from "@/lib/dashboard";
 import { NewsTicker } from "@/components/dashboard/news-ticker";
+import { BranchDashboardCards } from "@/components/dashboard/branch-dashboard-cards";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -80,110 +81,31 @@ export default async function DashboardPage({
     ]);
 
     return (
-      <div className="flex w-full min-w-0 flex-col gap-3">
+      <div className="flex w-full min-w-0 max-w-full flex-col gap-3 overflow-x-hidden">
         {isDemoViewingRole && viewRole === "branch_center" && (
           <p className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-center text-xs font-medium text-primary sm:px-4 sm:py-2 sm:text-sm">
             דוגמה: כך נראה הדשבורד של מרכזת סניף
           </p>
         )}
-        <h1 className="text-primary text-lg font-bold sm:text-xl">דשבורד</h1>
+        <h1 className="text-primary min-w-0 truncate text-lg font-bold sm:text-xl">דשבורד</h1>
 
         {/* סרט זז — חדשות מהארגון */}
-        <NewsTicker items={announcementsForTicker.map((a) => ({ id: a.id, title: a.title, body: a.body }))} />
-
-        {/* גריד — מובייל: עמודה אחת רוחב מלא; טאבלט+: 2–4 עמודות */}
-        <div className="grid w-full min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-          {/* תקציב — טורקיז */}
-          <Card className="w-full min-w-0 border-2 border-primary/30 bg-gradient-to-br from-primary-50 to-primary-100/50 p-2.5 shadow-sm sm:p-3">
-            <CardHeader className="p-0 pb-1">
-              <CardTitle className="text-base">ניהול תקציב הסניף</CardTitle>
-              <CardDescription className="text-xs">יתרה והעלאת קבלות</CardDescription>
-            </CardHeader>
-            <CardContent className="p-0">
-              <p className="text-2xl font-bold text-primary">{formatCurrency(balance.balance)}</p>
-              <p className="text-muted-foreground text-xs">מתוך {formatCurrency(balance.totalAllocations)}</p>
-              <Button variant="gradient" size="sm" className="mt-2 min-h-10 touch-manipulation sm:min-h-9" asChild>
-                <Link href="/dashboard/budget">+ העלאת קבלה</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* ימי הולדת — תוכן בגריד כך שאין שטח מת */}
-          {birthdays.length > 0 && (
-            <Card className="w-full min-w-0 border-2 border-pink-200/80 bg-gradient-to-br from-pink-50 to-amber-50/70 p-2.5 shadow-sm sm:col-span-2 sm:p-3">
-              <CardHeader className="p-0 pb-1.5 sm:pb-2">
-                <CardTitle className="text-sm font-semibold sm:text-base">ימי הולדת קרובים</CardTitle>
-                <CardDescription className="text-xs">30 הימים הקרובים</CardDescription>
-              </CardHeader>
-              <CardContent className="p-0">
-                <ul className="grid w-full min-w-0 grid-cols-2 gap-1.5 text-xs sm:grid-cols-3 sm:gap-2 sm:text-sm">
-                  {birthdays.slice(0, 6).map((b) => (
-                    <li key={b.id} className="flex items-center justify-between gap-1 rounded border border-pink-100 bg-white/50 px-1.5 py-1 sm:px-2 sm:py-1.5">
-                      <span className="min-w-0 font-medium truncate">{b.first_name} {b.last_name}</span>
-                      <span className="text-muted-foreground shrink-0 text-[10px] sm:text-xs">
-                        {b.daysUntil === 0 ? "היום!" : b.daysUntil === 1 ? "מחר" : `בעוד ${b.daysUntil}`}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="ghost" size="sm" className="mt-1.5 min-h-10 w-full touch-manipulation sm:mt-2 sm:min-h-9 sm:w-auto" asChild>
-                  <Link href="/dashboard/trainees">לחניכות וצוות</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* פעילויות — מסגרת קטנה */}
-          {upcoming.length > 0 && (
-            <Card className="w-full min-w-0 border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-orange-50/60 p-2.5 shadow-sm sm:p-3">
-              <CardHeader className="p-0 pb-1">
-                <CardTitle className="text-base">פעילויות קרובות</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <ul className="space-y-1 text-sm">
-                  {upcoming.slice(0, 3).map((a) => (
-                    <li key={a.id} className="flex justify-between gap-2 rounded border border-amber-200/80 px-2 py-1">
-                      <span className="font-medium truncate">{a.title}</span>
-                      <span className="text-muted-foreground shrink-0 text-xs">{formatDate(a.scheduled_at)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="ghost" size="sm" className="mt-1" asChild>
-                  <Link href="/dashboard/activities">הצגי הכל</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* הודעות — תוכן בגריד כך שאין שטח מת */}
-          {announcements.length > 0 && (
-            <Card className="w-full min-w-0 border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-lime-50/50 p-2.5 shadow-sm sm:col-span-2 sm:p-3">
-              <CardHeader className="p-0 pb-1.5 sm:pb-2">
-                <CardTitle className="text-sm font-semibold sm:text-base">הודעות מהמשרד</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <ul className="grid w-full min-w-0 grid-cols-1 gap-1.5 text-xs sm:grid-cols-2 sm:gap-2 sm:text-sm">
-                  {announcements.slice(0, 4).map((a) => (
-                    <li key={a.id} className="min-w-0 rounded border border-yellow-200/80 bg-white/60 px-1.5 py-1 sm:px-2 sm:py-1.5">
-                      <p className="font-medium truncate">{a.title}</p>
-                      <p className="text-muted-foreground truncate text-[10px] sm:text-xs">{a.body}</p>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* כפתורי פעולה — מובייל: עמודה; טאבלט+: שורה */}
-          <div className="flex w-full min-w-0 flex-col gap-2 sm:col-span-2 sm:flex-row sm:flex-wrap sm:justify-center">
-            <Button variant="default" size="sm" className="min-h-11 w-full touch-manipulation sm:min-h-9 sm:w-auto" asChild>
-              <Link href="/dashboard/activities">הוסף פעילות</Link>
-            </Button>
-            <Button variant="outline" size="sm" className="min-h-11 w-full touch-manipulation sm:min-h-9 sm:w-auto" asChild>
-              <Link href="/dashboard/activities">צ&#39;ק-ליסט פעילות</Link>
-            </Button>
-          </div>
+        <div className="w-full min-w-0 max-w-full overflow-hidden">
+          <NewsTicker items={announcementsForTicker.map((a) => ({ id: a.id, title: a.title, body: a.body }))} />
         </div>
+
+        {/* מובייל/טאבלט: אקורדיון; דסקטופ: גריד כרטיסים */}
+        <BranchDashboardCards
+          balance={{ balance: balance.balance, totalAllocations: balance.totalAllocations }}
+          announcements={announcements.map((a) => ({ id: a.id, title: a.title, body: a.body ?? null }))}
+          upcoming={upcoming.map((a) => ({ id: a.id, title: a.title, scheduled_at: a.scheduled_at }))}
+          birthdays={birthdays.map((b) => ({
+            id: b.id,
+            first_name: b.first_name,
+            last_name: b.last_name,
+            daysUntil: b.daysUntil,
+          }))}
+        />
       </div>
     );
   }
