@@ -4,6 +4,9 @@ import { getNavItemsForRole } from "@/lib/nav";
 import { isDemoUser } from "@/lib/demo";
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
 
+/** מונע cache — הסרגל תמיד לפי cookie עדכני (דמו) */
+export const dynamic = "force-dynamic";
+
 function roleLabel(role: string): string {
   const labels: Record<string, string> = {
     branch_center: "מרכזת סניף",

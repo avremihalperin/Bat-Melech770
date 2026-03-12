@@ -4,7 +4,12 @@ import { DEMO_USER_EMAIL } from "@/lib/demo";
 
 const DEMO_VIEW_ROLES = ["secretary", "branch_supervisor", "content_manager", "admin", "safety_officer", "branch_center"];
 
-const COOKIE_OPTS = { path: "/", maxAge: 60 * 60 * 24 } as const;
+const COOKIE_OPTS = {
+  path: "/",
+  maxAge: 60 * 60 * 24,
+  sameSite: "lax" as const,
+  secure: process.env.NODE_ENV === "production",
+} as const;
 
 /**
  * Middleware של Next.js — רץ לפני כל בקשת דף.
